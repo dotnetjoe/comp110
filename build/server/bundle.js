@@ -18,8 +18,24 @@ module.exports = function () {
   //   bundleStart = Date.now();
   //  });
 
-  // We also give notice when it is done compiling, including the
-  // time it took. Nice to have
+  //  compiler.plugin('compilation', (compilation) => {
+  //     for (let filename in compilation.assets) {
+  //       console.log(filename);
+  //     }
+  //  });
+
+  // // Hack to try and avoid endless loop issue.
+  // const timefix = 11000;
+  // compiler.plugin('watch-run', (watching, callback) => {
+  //   watching.startTime += timefix;
+  //   callback()
+  // });
+  // compiler.plugin('done', (stats) => {
+  //   stats.startTime -= timefix
+  // })
+
+  // // We also give notice when it is done compiling, including the
+  // // time it took. Nice to have
   // compiler.plugin('done', function() {
   //   console.log('Bundled in ' + (Date.now() - bundleStart) + 'ms!');
   // });

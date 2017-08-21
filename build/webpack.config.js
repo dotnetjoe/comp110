@@ -18,6 +18,9 @@ module.exports = {
             resolve(entries);
         });
     }),
+    watchOptions: {
+        aggregateTimeout: 1000
+    },
     resolve: {
         extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
     },
