@@ -1,0 +1,17 @@
+extends layout.pug
+
+block nav
+    div.breadcrumbs
+        span.home
+            a(href="/") Home
+        span.separator /
+        span.project
+            strong= title
+
+block content
+    ul.directory
+        each file in files
+            li
+                a(href=file.path)= file.title
+        else
+            .info No <code>app</code> files were found. Please add a TypeScript file whose suffix is <code>-app.ts</code> in order for it to show here.

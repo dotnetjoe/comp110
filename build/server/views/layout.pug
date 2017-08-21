@@ -1,0 +1,15 @@
+doctype html
+html
+    head
+        title= pageTitle
+        link(rel="stylesheet", href="/style/shell.css")
+        block styles
+        block meta
+    body
+        nav
+            block nav
+            block close
+                a.quit(href="/close") Close
+        block content
+        block scripts
+            script(src="/vendor/devServerClient.js")

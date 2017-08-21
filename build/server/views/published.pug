@@ -1,0 +1,14 @@
+extends layout.pug
+
+block nav
+    h1
+        strong Introduction to Computer Science - Publishing
+
+block content
+    .info
+        h2 Congratulations! Your app is live on the web!
+        h3
+            a(href=uri, target="_blank") Run Your App
+        p To use your app on a phone, or show your friends, use the following link:
+        p
+            input.share(value=uri)

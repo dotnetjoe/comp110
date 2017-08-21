@@ -1,0 +1,107 @@
+html { 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+    background: #444;
+    color: white;
+    padding: 1em 5%;
+    border-bottom: 1px solid #000;
+}
+
+nav h1 {
+    margin: 0;
+    font-weight: 100;
+    font-size: 1em;
+    color: #999;
+}
+
+nav .breadcrumbs {
+    display: inline-block;
+}
+
+nav span {
+    display: inline-block;
+    margin-right: 8px;
+}
+
+nav span.separator {
+    color: #999;
+}
+
+nav a {
+    color: #99badd;
+    text-decoration: none;
+}
+
+nav a.quit {
+    display: block;
+    position: absolute;
+    right: 5%;
+    top: 8px;
+    color: #000;
+    border: 1px solid #000;
+    background: #333;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+nav a.quit:hover {
+    color: red;
+}
+
+nav strong {
+    color: white;
+}
+
+nav .actions {
+    display: inline-block;
+    margin-left: 32px;
+}
+
+.btn {
+    background: white;
+    border-radius: 8px;
+    border: 1px solid black;
+    padding: 8px;
+}
+
+.btn.publish {
+    background: #9C9;
+    color: black;
+}
+
+ul.directory {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.directory li a {
+    padding: 1em 5%;
+    display: block;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid #efefef;
+}
+
+ul.directory li a:hover {
+    background: #99badd;
+}
+
+div.info {
+    margin: 1em 5%;
+}
+
+input.share {
+    font-size: 20px;
+    width: 90%;
+    padding: 8px;
+}

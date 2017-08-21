@@ -1,0 +1,11 @@
+extends layout.pug
+
+block nav
+    h1
+        strong Introduction to Computer Science
+
+block content
+    ul.directory
+        each file in files
+            li
+                a(href=file.path)= file.title
