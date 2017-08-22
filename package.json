@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "npm install && node build/server/server.js",
+    "start": "node build/server/server.js",
+    "pull": "git pull origin master && npm install",
     "start-safe-mode": "node build/server/server.js"
   },
   "author": "",
