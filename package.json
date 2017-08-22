@@ -4,8 +4,7 @@
   "description": "",
   "scripts": {
     "start": "node build/server/server.js",
-    "pull": "git pull origin master && npm install",
-    "start-safe-mode": "node build/server/server.js"
+    "pull": "git pull origin master && npm install"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +22,7 @@
     "mocha": "^3.5.0",
     "open": "0.0.5",
     "pug": "^2.0.0-rc.2",
+    "rimraf": "^2.6.1",
     "source-map-support": "^0.4.16",
     "style-loader": "^0.18.2",
     "ts-loader": "^2.3.0",

@@ -8,6 +8,7 @@ const mkdirp = require("mkdirp");
 const FormData = require('form-data');
 const Promise = require("bluebird");
 const child_process = require("child_process");
+const rimraf = require("rimraf");
 
 class BundleProcessState {
     constructor(project, app) {
@@ -297,7 +298,7 @@ let clean = exports.clean = function(state) {
 
 let rm = function(state, target) {
     return new Promise((resolve, reject) => {
-        child_process.exec(`rm -r ${target}`, (err, stdout, stderr) => {
+        rimraf(target, (err) => {
             if (err) {
                 reject(err);
             } else {
