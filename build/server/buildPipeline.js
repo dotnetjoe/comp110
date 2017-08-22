@@ -28,6 +28,7 @@ let beginBundle = exports.beginBundle = function(project, app) {
 }
 
 let publish = exports.publish = function(bundlePromise, publishToken) {
+    console.info("\n== Publishing ==");
     let state;
     return bundlePromise
            .then((s) => {
@@ -36,11 +37,20 @@ let publish = exports.publish = function(bundlePromise, publishToken) {
                return state;
            })
            .then(publishBundle)
-           .finally(() => cleanZip(state))
+           .finally(
+               () => { 
+                    if (state) {
+                        cleanZip(state);
+                        console.log("== Published: " + state.publishUrl);
+                        console.log();
+                    }
+                }
+            )
            ;
 };
 
 let publishBundle = exports.publishBundle = function(state) {
+    console.info(" - Uploading bundle");
     let token = state.publishToken;
     let {project, app} = state;
     let bundle = state.bundleZip;
@@ -90,15 +100,18 @@ function getTimestamp() {
 }
 
 let mkdirForBundle = exports.mkdirForBundle = function(state) {
+    console.info(" - Making directory for bundle");
     return new Promise((resolve, reject) => {
         try {
             let date = getDateString();
             let timestamp = getTimestamp();
             let folder = date + "-" + state.project + "-" + state.app + "-" + timestamp;
-            state.bundleDir = mkdir(path.join("../publish", folder));
+            state.bundleDir = mkdir("../publish", folder);
             state.publicDir = path.join(state.bundleDir, "public");
             resolve(state);
         } catch (e) {
+            console.error("Error in mkdirForBundle");
+            console.error(e);
             reject(e);
         }
     });
@@ -116,6 +129,7 @@ function mkdir(...folders) {
 }
 
 let compilePublic = exports.compilePublic = function(state) {
+    console.info(" - Compiling production assets for public");
     let sourceWatcher = state.sourceWatcher = new SourceWatcher();
     let {project, app} = state;
     let dir = state.publicDir;
@@ -123,8 +137,12 @@ let compilePublic = exports.compilePublic = function(state) {
         let webpacker = webpack(webpackConfig(sourceWatcher, project, app, dir));
         webpacker.run((err, stats) => {
             if (err) {
+                console.error("Error in compilePublic");
+                console.error(err);
                 reject(err);
             } else if (stats.hasErrors()) {
+                console.error("Error in compilePublic - stats hasErrors");
+                console.error(stats);
                 reject(stats.toString());
             } else {
                 resolve(state);
@@ -143,6 +161,7 @@ function pad(n, width, z) {
 }
 
 let generateHtml = exports.generateHtml = function(state) {
+    console.info(" - Generating HTML for public");
     let {project, app, publicDir} = state;
     let t = getTimestamp();
     return new Promise((resolve, reject) => {
@@ -160,6 +179,8 @@ let generateHtml = exports.generateHtml = function(state) {
                 resolve(state);
             });
         } catch(e) {
+            console.error("Error in generateHtml");
+            console.error(e);
             reject(e);
         }
     });
@@ -169,28 +190,30 @@ let buildPublic = exports.buildPublic = function(state) {
     return Promise.resolve(state).then(compilePublic).then(generateHtml);
 }
 
-let bundleSources = exports.bundleSources = function(sourceWatcher, srcDir) {
-    let projectSrc = path.join(__dirname, "../../src");
-    return function() {
-        return new Promise((resolve, reject) => {
-            let promises = [];
-            for (let source of sourceWatcher.sources.values()) {
-                let target = path.join(srcDir, source.replace(projectSrc, ""));
-                mkdirp.sync(path.dirname(target));
-                promises.push(new Promise( (resolve, reject) => {
-                    let inputPath = path.join(source);
-                    let inputStream = fs.createReadStream(inputPath);
-                    let outputPath = target;
-                    let outputStream = fs.createWriteStream(outputPath);
-                    inputStream.pipe(outputStream).on("finish", resolve);
-                }));
-            }
-            Promise.all(promises).then(() => resolve());
-        });
-    }
-}
+// let bundleSources = exports.bundleSources = function(sourceWatcher, srcDir) {
+//     console.info(" - Bundling source code");
+//     let projectSrc = path.join(__dirname, "../../src");
+//     return function() {
+//         return new Promise((resolve, reject) => {
+//             let promises = [];
+//             for (let source of sourceWatcher.sources.values()) {
+//                 let target = path.join(srcDir, source.replace(projectSrc, ""));
+//                 mkdirp.sync(path.dirname(target));
+//                 promises.push(new Promise( (resolve, reject) => {
+//                     let inputPath = path.join(source);
+//                     let inputStream = fs.createReadStream(inputPath);
+//                     let outputPath = target;
+//                     let outputStream = fs.createWriteStream(outputPath);
+//                     inputStream.pipe(outputStream).on("finish", resolve);
+//                 }));
+//             }
+//             Promise.all(promises).then(() => resolve());
+//         });
+//     }
+// }
 
 let copySrc = exports.copySrc = function(state) {
+    console.info(" - Copying source code");
     let projectSrc = rootPath(state, "src");
     let {sourceWatcher} = state;
     let srcDir = path.join(state.bundleDir, "src");
@@ -228,6 +251,7 @@ let cp = exports.cp = function(from, to) {
 };
 
 let buildLib = exports.buildLib = function(state) {
+    console.info(" - Compiling TypeScript files for testing");
     return new Promise((resolve, reject) => {
         child_process.spawn("tsc", [], { cwd: state.bundleDir, shell: true })
                      .on("exit", () => resolve(state))
@@ -236,11 +260,14 @@ let buildLib = exports.buildLib = function(state) {
 };
 
 let zip = exports.zip = function(state) {
+    console.info(" - Zipping bundle package");
     return new Promise((resolve, reject) => {
         let directory = state.bundleDir;
         let bundle = state.bundleZip = `${directory}.zip`;
         zipFolder(directory, bundle, (err) => {
             if (err) {
+                console.error("Error zipping bundle package");
+                console.error(err);
                 reject(err);
             } else {
                 resolve(state);
@@ -250,10 +277,12 @@ let zip = exports.zip = function(state) {
 };
 
 let cleanFolder = exports.cleanFolder = function(state) {
+    console.info(" - Deleting bundle folder");
     return rm(state, state.bundleDir);
 };
 
 let cleanZip = exports.cleanZip = function(state) {
+    console.info(" - Deleting bundle zip");
     return rm(state, state.bundleZip);
 };
 
