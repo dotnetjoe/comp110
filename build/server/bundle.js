@@ -64,7 +64,10 @@ module.exports = function () {
 
   // We fire up the development server and give notice in the terminal
   // that we are starting the initial bundle
-  bundler.listen(3001, 'localhost', function () {});
+  bundler
+  .listen(3001, 'localhost', function () {})
+  .on("error", () => {})
+  ;
 
   // Surface a method that allows us to rerun the bundler on demand.
   this.run = function() {

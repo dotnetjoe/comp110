@@ -174,3 +174,11 @@ server = app.listen(port, function () {
   console.log('Your workspace is accessible at http://localhost:' + port);
   open(`http://localhost:${port}`);
 });
+
+server.on("error", () => {
+  open(`http://localhost:${port}`);
+  console.log("It looks like your development server is already running!");
+  console.log("We're opening it up for you now...");
+  console.log("To close it, press the dark 'Close' button in the top right area of the page");
+  setTimeout(() => { process.exit(); }, 100);
+});
