@@ -1,7 +1,6 @@
 var express = require('express');
 var path = require('path');
 var httpProxy = require('http-proxy');
-var portscanner = require('portscanner');
 
 var proxy = httpProxy.createProxyServer();
 var app = express();
