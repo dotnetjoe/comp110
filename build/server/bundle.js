@@ -65,7 +65,7 @@ module.exports = function () {
   // We fire up the development server and give notice in the terminal
   // that we are starting the initial bundle
   bundler
-  .listen(3001, 'localhost', function () {})
+  .listen(30001, 'localhost', function () {})
   .on("error", () => {})
   ;
 

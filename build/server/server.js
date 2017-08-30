@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var httpProxy = require('http-proxy');
+var portscanner = require('portscanner');
 
 var proxy = httpProxy.createProxyServer();
 var app = express();
@@ -35,7 +36,7 @@ if (!isProduction) {
   // to webpack-dev-server
   app.all('/dist/*', function (req, res) {
     proxy.web(req, res, {
-        target: 'http://localhost:3001'
+        target: 'http://localhost:30001'
     });
   });
 
