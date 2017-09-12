@@ -21,7 +21,7 @@
         "jsx-no-lambda": false,
         "jsx-no-multiline-js": false,
         "label-position": true,
-        "max-line-length": [ true, 120 ],
+        "max-line-length": false,
         "member-ordering": [
             true,
             "public-before-private",
@@ -34,7 +34,6 @@
         "no-console": [
             false
         ],
-        "no-consecutive-blank-lines": true,
         "no-construct": true,
         "no-debugger": true,
         "no-duplicate-variable": true,
@@ -46,6 +45,7 @@
         "no-trailing-whitespace": false,
         "no-unused-expression": true,
         "no-use-before-declare": true,
+        "no-conditional-assignment": true,
         "one-line": [
             true,
             "check-catch",
@@ -53,6 +53,7 @@
             "check-open-brace",
             "check-whitespace"
         ],
+        "one-variable-per-declaration": [true, "ignore-for-loop"],
         "quotemark": [true, "double", "jsx-double"],
         "radix": true,
         "semicolon": [true, "always"],
@@ -81,7 +82,7 @@
                 "variable-declaration": "nospace"
             }
         ],
-        "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"],
+        "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
         "whitespace": [
             true,
             "check-branch",
@@ -89,8 +90,8 @@
             "check-module",
             "check-operator",
             "check-separator",
-            "check-type",
-            "check-typecast"
+            "check-typecast",
+            "check-preblock"
         ],
         "array-type": [true, "array"]
     }
