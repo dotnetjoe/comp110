@@ -14,11 +14,14 @@ function process(data: WeatherRow[]): void {
     printRows(data, 3);
 
     print("Sorted byTempLow");
-    data.sort(byTempLow);
+    // TODO #1 Sort Data using byTempLow comparator
+    let comparator: Comparator<WeatherRow> = byTempLow;
+    
     printRows(data, 3);
 
     print("Sorted byTempHigh");
-    data.sort(byTempHigh);
+    // TODO #2 Sort Data using byTempHigh comparator
+    
     printRows(data, 3);
 }
 

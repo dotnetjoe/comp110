@@ -12,5 +12,26 @@ export function byTempLow(a: WeatherRow, b: WeatherRow): number {
 }
 
 export function byTempHigh(a: WeatherRow, b: WeatherRow): number {
+    // TODO!
     return 0;
+}
+
+export function alphabetical(a: string, b: string): number {
+    if (a < b) {
+        return A_BEFORE_B;
+    } else if (a === b) {
+        return A_SAME_AS_B;
+    } else {
+        return A_AFTER_B;
+    }
+}
+
+export function numerical(a: number, b: number): number {
+    if (a < b) {
+        return A_BEFORE_B;
+    } else if (a === b) {
+        return A_SAME_AS_B;
+    } else {
+        return A_AFTER_B;
+    }
 }
