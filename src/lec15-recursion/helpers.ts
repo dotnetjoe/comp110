@@ -1,7 +1,13 @@
-export function first(a: number[]): number {
+/**
+ * Returns the first element of an array.
+ */
+export function first<T>(a: T[]): T {
     return a[0];
 }
 
-export function rest(a: number[]): number[] {
+/**
+ * Given an array, returns a new array without its first element.
+ */
+export function rest<T>(a: T[]): T[] {
     return a.slice(1, a.length);
 }

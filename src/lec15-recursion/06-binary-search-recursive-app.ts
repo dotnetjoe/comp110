@@ -1,7 +1,9 @@
 import "introcs";
 
 /*
- * For comparison purposes, compare this implementation of binary search to the looping version in lec14.
+ * For comparison purposes, compare this implementation of binary search 
+ * to the imperative (looping) version in lec14. We will not cover this one
+ * in class.
  */
 
 import { Entry } from "../lec14-sorting-searching/Entry";

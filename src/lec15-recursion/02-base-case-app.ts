@@ -8,11 +8,8 @@ function main(): void {
 
 function f(n: number): void {
     print("Enter f(" + n + ")");
-    if (n <= 0) {
-        print("Base Case!");
-    } else {
-        f(n - 1);
-    }
+    // TODO: Fix the infinite recursion with a base case
+    f(n - 1);
     print("Leave f(" + n + ")");
 }
 

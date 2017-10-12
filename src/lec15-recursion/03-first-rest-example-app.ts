@@ -8,12 +8,8 @@ function main(): void {
     print(a);
 
     // TODO: Print the first element of a
-    print(first(a));
 
     // TODO: Print the rest of a using the rest function
-    print(rest(a));
-    print(rest(rest(a)));
-    print(rest(rest(rest(a))));
     
 }
 
