@@ -176,7 +176,7 @@ if (!isProduction) {
       return {title: english(match[2]), path: `/${match[1]}/${match[2]}`};
     } else {
       match = /\.\/src\/(.*)\/(.+).html$/.exec(path);
-      return {title: english(match[2]), path: `/${match[1]}/${match[2]}`};
+      return {title: english(match[2]), path: `/${match[1]}/${match[2]}.html`};
     }
   }
 
@@ -196,19 +196,41 @@ if (!isProduction) {
     });
   }
 
+  function staticFile(project, file) {
+    return globPromise(`./src/${project}/${file}`);
+  }
+
   app.get("/html/:project/:app", function(req, res, next) {
     let props = req.params;
+
+    if (props.app.indexOf(".html") !== -1) {
+      props.app = props.app.replace(".html", "");
+    }
+
     allAppFiles(props.project, props.app)
     .then((files) => {
       if (files.length === 0 || files[0].indexOf("html") === -1) {
-        res.send("HTML file not found");
+        // Here we try for a static file
+        let files = staticFile(props.project, props.app);
+        files.then((files) => {
+          if (files.length > 0) {
+            res.sendFile(path.resolve(files[0]));
+          } else {
+            res.status(404);
+            res.send("Not Found");
+          }
+        }).catch((e) => {
+          console.log(e);
+          res.status(404);
+          res.send("Not Found");
+        });
       } else {
         let htmlFile = path.resolve(__dirname, "../..", "src", props.project, props.app + ".html");
         readFile(htmlFile)
         .then((contents) => {
-          let refs = /src[ ]*=[ ]*"\.\/([^"]*)-app.ts"/gi;
+          let refs = /src[ ]*=[ ]*"\.\/([^"]*)-script.ts"/gi;
           let filtered = contents.replace(refs, (match) => {
-            refs = /src[ ]*=[ ]*"\.\/([^"]*)-app.ts"/gi;
+            refs = /src[ ]*=[ ]*"\.\/([^"]*)-script.ts"/gi;
             let captures = refs.exec(match);
             return "src=\"/dist/" + props.project + "-" + captures[1] + ".js\"";
           });
@@ -224,6 +246,10 @@ if (!isProduction) {
 
   app.get("/:project/:app", function(req, res, next) {
     let props = req.params;
+
+    if (props.app.indexOf(".html") !== -1) {
+      props.app = props.app.replace(".html", "");
+    }
 
     // Check to see if file exists
     allAppFiles(props.project, props.app)
