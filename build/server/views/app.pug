@@ -1,0 +1,35 @@
+extends layout.pug
+
+block styles
+    link(rel="stylesheet", href=style)
+
+block meta
+    meta(charset="utf-8")
+    meta(name="HandheldFriendly" content="True")
+    meta(name="MobileOptimized" content="320")
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1")
+    meta(name="cleartype" content="on")
+    meta(name="mobile-web-app-capable" content="yes")
+    meta(name="apple-mobile-web-capable" content="yes")
+    meta(name="apple-mobile-web-app-title" content=title)
+    meta(name="apple-mobile-web-app-status-bar-style" content="black")
+
+block nav
+    div.breadcrumbs
+        span.home
+            a(href="/") Home
+        span.separator /
+        span.project
+            a(href=projectPath)= projectTitle
+        span.separator /
+        span.title
+            strong= title
+    div.actions
+        a.btn.publish(href=`https://my.introcs.com/publish-token${appPath}`,target="_blank") Publish App
+
+block content
+    #container
+
+block append scripts
+    include devServerClient.pug
+    script(src=script)
