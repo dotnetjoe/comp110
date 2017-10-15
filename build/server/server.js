@@ -118,30 +118,129 @@ if (!isProduction) {
         res.redirect(`/`);
       } else {
         bundle.run();
-        glob("./src/" + req.params.project + "/*-app.ts", function(err, files) {
-          props.script = "";
-          props.files = files.map(pathToProgram);
-          props.title = english(props.project);
-          props.pageTitle = english(props.project);
-          res.render('project', props);
+        allProjectApps(props.project).then((files) => {
+            props.script = "";
+            props.files = files.map(pathToProgram);
+            props.title = english(props.project);
+            props.pageTitle = english(props.project);
+            res.render('project', props);
+          })
+          .catch((e) => {
+            res.send("error: " + e);
+          });
+      }
+    });
+  });
+
+  function allProjectApps(project) {
+    let htmlFiles = globPromise("./src/" + project + "/*.html");
+    let tsFiles = globPromise("./src/" + project + "/*-app.ts");
+    return new Promise((resolve, reject) => {
+      Promise.all([tsFiles, htmlFiles])
+             .then((allFiles) => {
+               resolve(allFiles[0].concat(allFiles[1]).sort());
+             })
+             .catch(reject);
+    });
+    return ;
+  }
+
+  function allAppFiles(project, app) {
+    let htmlFiles = globPromise("./src/" + project + "/" + app + ".html");
+    let tsFiles = globPromise("./src/" + project + "/" + app + "-app.ts");
+    return new Promise((resolve, reject) => {
+      Promise.all([tsFiles, htmlFiles])
+             .then((allFiles) => {
+               resolve(allFiles[0].concat(allFiles[1]));
+             })
+             .catch(reject);
+    });
+    return ;
+  }
+
+  function globPromise(path) {
+    return new Promise((resolve, reject) => {
+      glob(path, (err, files) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(files);
+        }
+      });
+    });
+  }
+
+  function pathToProgram(path) {
+    let match = /\.\/src\/(.*)\/(.+)-app.ts$/.exec(path);
+    if (match) {
+      return {title: english(match[2]), path: `/${match[1]}/${match[2]}`};
+    } else {
+      match = /\.\/src\/(.*)\/(.+).html$/.exec(path);
+      return {title: english(match[2]), path: `/${match[1]}/${match[2]}`};
+    }
+  }
+
+  function readFile(path) {
+    return new Promise((resolve, reject) => {
+      fs.readFile(
+        path, 
+        { encoding: "utf8" }, 
+        (err, data) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        }
+      );
+    });
+  }
+
+  app.get("/html/:project/:app", function(req, res, next) {
+    let props = req.params;
+    allAppFiles(props.project, props.app)
+    .then((files) => {
+      if (files.length === 0 || files[0].indexOf("html") === -1) {
+        res.send("HTML file not found");
+      } else {
+        let htmlFile = path.resolve(__dirname, "../..", "src", props.project, props.app + ".html");
+        readFile(htmlFile)
+        .then((contents) => {
+          let refs = /src[ ]*=[ ]*"\.\/([^"]*)-app.ts"/gi;
+          let filtered = contents.replace(refs, (match) => {
+            refs = /src[ ]*=[ ]*"\.\/([^"]*)-app.ts"/gi;
+            let captures = refs.exec(match);
+            return "src=\"/dist/" + props.project + "-" + captures[1] + ".js\"";
+          });
+          res.send(filtered);
+        })
+        .catch((e) => {
+          console.log(e);
+          res.send(e);
         });
       }
     });
   });
 
-  function pathToProgram(path) {
-    let match = /\.\/src\/(.*)\/(.+)-app.ts$/.exec(path);
-    return {title: english(match[2]), path: `/${match[1]}/${match[2]}`};
-  }
-
   app.get("/:project/:app", function(req, res, next) {
     let props = req.params;
-    fs.access(`./src/${props.project}/${props.app}-app.ts`, fs.constants.F_OK, (err) => {
-      if (err) {
+
+    // Check to see if file exists
+    allAppFiles(props.project, props.app)
+    .then((files) => {
+      if (files.length === 0) {
         res.redirect(`/${props.project}`);
       } else {
-        bundle.run();
-        glob("./src/*/*-app.ts", function(err, files) {
+        let file = files[0];
+        if (file.indexOf(".html") !== -1) {
+          props.html = "/html/" + props.project + "/" + props.app;
+          props.pageTitle = english(props.app) + " (" + english(props.project) + ")";
+          props.title = english(props.app);
+          props.projectTitle = english(props.project);
+          props.projectPath = `/${props.project}`;
+          props.appPath = `/${props.project}/${props.app}`;
+          res.render('app-html', props);
+        } else {
           props.script = "/dist/" + req.params.project + "-" + req.params.app + ".js";
           props.style = "/dist/" + req.params.project + "-" + req.params.app + ".css";
           props.files = files.map(pathToBundle);
@@ -150,12 +249,14 @@ if (!isProduction) {
           props.projectTitle = english(props.project);
           props.projectPath = `/${props.project}`;
           props.appPath = `/${props.project}/${props.app}`;
-          res.render('app', props);
-        });
+          res.render('app-ts', props);
+        }
       }
+    })
+    .catch((e) => {
+      res.send("error: " + e);
     });
   });
-
 }
 
 function pathToBundle(path) {
