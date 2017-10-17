@@ -33,9 +33,9 @@ export function push(data: string, tail: Node | null): Node {
     return head;
 }
 
-export function copy(head: Node | null): Node | null {
-    if (head === null) {
-        return null;
+export function copy(head: Node): Node {
+    if (head.next === null) {
+        return head;
     } else {
         return push(head.data, copy(head.next));
     }
@@ -51,11 +51,11 @@ export function append(data: string, head: Node): void {
     }
 }
 
-export function get(head: Node | null, i: number): string | null {
-    if (head === null) {
-        return null;
-    } else if (i === 0) {
+export function get(head: Node, i: number): string | null {
+    if (i === 0) {
         return head.data;
+    } else if (head.next === null) {
+        return null;
     } else {
         return get(head.next, i - 1);
     }
