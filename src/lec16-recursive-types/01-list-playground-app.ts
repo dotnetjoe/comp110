@@ -3,7 +3,7 @@ import "introcs";
 import { Node } from "./Node";
 
 import {
-    push,
+    link,
     toString,
     length,
     lengthLoop,
@@ -14,12 +14,8 @@ import {
 
 function main(): void {
 
-    let list: Node;
-    list = push("a", null);
-    list = push("b", list);
-    list = push("c", list);
-
-    print(toString(list));
+    let list: Node = link("Jane", link("John", link("Sally", null)));
+    print("Length: " + length(list));
 
 }
 

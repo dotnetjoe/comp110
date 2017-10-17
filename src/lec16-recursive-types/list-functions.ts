@@ -1,73 +1,81 @@
 import { Node } from "./Node";
 
-export function length(head: Node): number {
-    if (head.next === null) {
-        return 1;
-    } else {
-        return 1 + length(head.next);
-    }
-}
-
-export function lengthLoop(head: Node): number {
-    let count: number = 0;
-    let current: Node | null = head;
-    while (current !== null) {
-        current = current.next;
-        count++;
-    }
-    return count;
-}
-
-export function toString(head: Node): string {
-    if (head.next === null) {
-        return head.data + " -> null";
-    } else {
-        return head.data + " -> " + toString(head.next);
-    }
-}
-
-export function push(data: string, tail: Node | null): Node {
+/**
+ * Given a string and a head node, pushes a new node in front
+ * of the previous head node and returns the new head node.
+ */
+export function link(data: string, rest: Node | null): Node {
     let head: Node = new Node();
     head.data = data;
-    head.next = tail;
+    head.next = rest;
     return head;
 }
 
-export function copy(head: Node): Node {
-    if (head.next === null) {
-        return head;
-    } else {
-        return push(head.data, copy(head.next));
-    }
+/**
+ * Given a head Node, this function will return the number
+ * of Nodes in the linked list. It does so recursively.
+ */
+export function length(node: Node): number {
+    // TODO: Fix this implementation
+    return 1;
 }
 
-export function append(data: string, head: Node): void {
-    if (head.next === null) {
-        let tail: Node = new Node();
-        tail.data = data;
-        head.next = tail;
-    } else {
-        append(data, head.next);
-    }
+/**
+ * Given a head Node, this function will return the number
+ * of Nodes in the linked list. It does so imperatively.
+ */
+export function lengthLoop(node: Node): number {
+    let count: number = 1;
+    let current: Node = node;
+    // TODO: Fix this implementation
+
+    return count;
 }
 
-export function get(head: Node, i: number): string | null {
-    if (i === 0) {
-        return head.data;
-    } else if (head.next === null) {
-        return null;
-    } else {
-        return get(head.next, i - 1);
-    }
+/**
+ * Given a head Node, this function will return a string
+ * representation of the list in the form of:
+ * 
+ * Single Node: A -> null
+ * Many Nodes:  C -> B -> A -> null
+ */
+export function toString(node: Node): string {
+    return "null";
 }
 
-export function reverse(head: Node): Node {
-    if (head.next === null) {
-        return head;
-    } else {
-        let rest: Node = reverse(head.next);
-        head.next.next = head;
-        head.next = null;
-        return rest;
-    }
+/**
+ * Given a head Node and an index i, return the string value
+ * of the ith linked Node. If no such node exists, returns null.
+ */
+export function get(node: Node, i: number): string | null {
+    return null;
+}
+
+// === Challenge Functions ===
+
+/**
+ * Given a head node, copy all values to a new list. Returns
+ * the copied list's head node. You'll want to make use of the link
+ * function.
+ */
+export function copy(node: Node): Node {
+    // TODO
+    return node;
+}
+
+/**
+ * Given a string and a head node, append a new node whose
+ * data is the string to the end of the list.
+ */
+export function append(data: string, node: Node): void {
+    // TODO
+}
+
+/**
+ * Given a head Node, reverse the list and return the new 
+ * head Node.
+ */
+export function reverse(node: Node): Node {
+    // TODO
+    return node;
 }
