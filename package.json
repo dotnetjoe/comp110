@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "introcs": "0.3.2"
+    "introcs": "0.3.3"
   },
   "devDependencies": {
     "bluebird": "^3.5.0",
