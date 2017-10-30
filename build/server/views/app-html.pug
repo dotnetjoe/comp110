@@ -24,4 +24,4 @@ block nav
     div.actions
 
 block content
-    iframe#container(src=html)
+    iframe#container(src=html,onload="this.contentWindow.focus()")
