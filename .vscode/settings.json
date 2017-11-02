@@ -12,6 +12,7 @@
         "**/build": true,
         "**/lib": true,
         "package.json": true,
+        "package-lock.json": true,
         "tsconfig.json": true,
         "tslint.json": true
     },
