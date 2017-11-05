@@ -19,7 +19,7 @@ export class FaceShape {
     shapes(): Group {
         let shapes: Group = new Group();
 
-        // TODO #1: Remove the three lines of code below adding the text "Emoji"
+        // TODO #1: Remove the four lines of code below adding the text "Emoji"
         //          to the shapes group.
         // TODO #2: Import, construct, and add one or more Shape objects to the shapes
         //          group to design your FaceShape.
@@ -27,6 +27,7 @@ export class FaceShape {
         //          FaceShape's tone Color property. (Requirement A2!)
         let temp: Text = new Text("PS05: Emoji!");
         temp.textAnchor = "middle";
+        temp.fill = this.tone;
         shapes.add(temp);
 
         return shapes;

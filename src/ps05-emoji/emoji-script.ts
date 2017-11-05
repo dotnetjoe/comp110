@@ -14,7 +14,7 @@ function main(): void {
     scene.add(grid.shapes());
 
     // TODO: Change the following code when you work on other pieces (Eye, Mouth, Emoji)
-    let piece: FaceShape = new FaceShape(new Color(0.3, 0.3, 1.0));
+    let piece: FaceShape = new FaceShape(new Color(0.2941, 0.6118, 0.8275));
     scene.add(piece.shapes());
 
 }
