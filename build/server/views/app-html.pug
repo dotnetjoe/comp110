@@ -22,6 +22,7 @@ block nav
         span.title
             strong= title
     div.actions
+        a.btn.publish(href=`https://my.introcs.com/publish-token${appPath}.html`,target="_blank") Publish App
 
 block content
     iframe#container(src=html,onload="this.contentWindow.focus()")

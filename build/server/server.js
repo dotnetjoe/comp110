@@ -15,7 +15,8 @@ var glob = require("glob");
 
 var open = require("open");
 
-let buildPipeline = require("./buildPipeline");
+let buildPipelineTS = require("./buildPipelineTS");
+let buildPipelineHTML = require("./buildPipelineHTML");
 
 let server = null;
 
@@ -93,10 +94,20 @@ if (!isProduction) {
   app.get("/publish/:project/:app", (req, res, next) => {
     let {project, app} = req.params;
     let {token} = req.query;
-    buildPipeline.publish(buildPipeline.bundle(project, app), token)
-    .then((state) => res.redirect(`/published/${project}/${app}?uri=${state.publishUrl}`))
-    .catch(err => res.redirect(`/published/${project}/${app}?error=${err}`))
-    ;
+
+    if (app.indexOf(".html") !== -1) {
+      buildPipelineHTML.publish(buildPipelineHTML.bundle(project, app), token)
+      .then((state) => res.redirect(`/published/${project}/${app}?uri=${state.publishUrl}`))
+      .catch(err => res.redirect(`/published/${project}/${app}?error=${err}`))
+      ;
+    } else {
+      buildPipelineTS.publish(buildPipelineTS.bundle(project, app), token)
+      .then((state) => res.redirect(`/published/${project}/${app}?uri=${state.publishUrl}`))
+      .catch(err => res.redirect(`/published/${project}/${app}?error=${err}`))
+      ;
+    }
+
+
   });
 
   app.get("/published/:project/:app", (req, res, next) => {

@@ -1,4 +1,4 @@
-let { bundle, publish } = require("./server/buildPipeline");
+let { bundle, publish } = require("./server/buildPipelineTS");
 
 let project = "demo";
 let app = "test";
