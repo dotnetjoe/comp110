@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<!-- We are using the Bootstrap CSS framework today! 
+     http://getbootstrap.com/docs/4.0/getting-started/introduction/ -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Creed's Tweets</title>
+    <!-- Bootstrap's Style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="media">
+                <img class="mr-2" width="128" src="https://pbs.twimg.com/profile_images/565202510789349376/mQDDY5Iw.jpeg">
+                <div class="media-body">
+                    <h1 class="display-4">Creed's Tweets</h1>
+                    <p class="lead">Unfiltered thoughts from Creed Bratton</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg">
+                <!-- The Tweet posting form begins here -->
+                <form id="form">
+
+                    <div class="form-group">
+                        <label for="noun">Tweet</label>
+                        <!-- The text input box where you type the tweet follows -->
+                        <input type="text" class="form-control" id="text">
+                    </div>
+
+                    <!-- A nice button to submit the form -->
+                    <button type="submit" class="btn btn-primary">Post</button> 
+                    
+                    <!-- The # of characters the user types will fill in below -->
+                    <span id="characters">0</span>
+
+                </form>
+
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-lg">
+                <h2>Tweets</h2>
+                <div id="tweets">
+                    <!-- Tweets will post here! -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap's Scripts -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
+    <!-- Our Code! -->
+    <script src="./creeds-tweets-script.ts"></script>
+</body>
+
+</html>
