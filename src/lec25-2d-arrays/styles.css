@@ -1,0 +1,17 @@
+td {
+    border: 1px solid black;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.alive {
+    background: black;
+    color: gray;
+}
+
+.dead {
+    background: whitesmoke;
+    color: white;
+}
