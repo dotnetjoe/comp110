@@ -1,0 +1,27 @@
+<!-- This template is pulled from: https://getbootstrap.com/docs/4.0/getting-started/introduction/ -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Game of Life</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="container">
+        <h1>Conway's Game of Life</h1>
+        <div id="board"></div>
+        <br>
+        <button id="step" class="btn btn-large btn-primary">Step</button>
+        <button id="start" class="btn btn-large btn-success">Start</button>
+        <button id="stop" class="btn btn-large btn-danger">Stop</button>
+        <button id="clear" class="btn btn-large btn-warning">Clear</button>
+    </div>
+
+    <!-- Project's TypeScript (Note, you can link to different typescript files from different pages.) -->
+    <script src="./game-of-life-script.ts"></script>
+</body>
+</html>
