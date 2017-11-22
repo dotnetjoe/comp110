@@ -1,115 +1,6 @@
-export class Color {
-    red: number;
-    green: number;
-    blue: number;
-
-    constructor(red: number, green: number, blue: number) {
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
-    }
-
-    copy(): Color {
-        return new Color(this.red, this.green, this.blue);
-    }
-}
-
-export class Image {
-    pixels: Color[][];
-    width: number;
-    height: number;
-
-    constructor(width: number, height: number) {
-        this.width = width;
-        this.height = height;
-        this.pixels = [];
-        for (let row: number = 0; row < height; row++) {
-            this.pixels[row] = [];
-            for (let col: number = 0; col < width; col++) {
-                this.pixels[row][col] = new Color(1, 1, 1);
-            }
-        }
-    }
-
-    copy(): Image {
-        let clone: Image = new Image(this.width, this.height);
-        for (let row: number = 0; row < this.height; row++) {
-            for (let col: number = 0; col < this.width; col++) {
-                clone[row][col] = clone[row][col].copy();
-            }
-        }
-        return clone;
-    }
-}
-
-export interface ImageEventHandler {
-    (image: Image): void;
-}
-
-export class ImageLoader {
-    input: HTMLInputElement;
-    reader: FileReader;
-    img: HTMLImageElement;
-    canvas: HTMLCanvasElement;
-    onload: ImageEventHandler;
-
-    constructor(input: HTMLInputElement, width: number, height: number) {
-        this.input = input;
-        this.reader = new FileReader();
-        this.img = document.createElement("img");
-        this.canvas = document.createElement("canvas");
-        this.canvas.width = width;
-        this.canvas.height = height;
-
-        this.input.onchange = this.readFile.bind(this);
-        this.reader.onload = this.createImage.bind(this);
-        this.img.onload = this.loadImage.bind(this);
-    }
-
-    readFile(): void {
-        let files: FileList | null = this.input.files;
-        if (files === null) {
-            return;
-        }
-        let file: File = files[0];
-        this.reader.readAsDataURL(file);
-    }
-
-    createImage(): void {
-        this.img.src = this.reader.result;
-    }
-
-    loadImage(): void {
-        let srcX: number = 0;
-        let srcY: number = 0;
-        let constraint: number;
-        if (this.img.height > this.img.width) {
-            constraint = this.img.width;
-            srcY = (this.img.height - this.img.width) / 2;
-        } else {
-            constraint = this.img.height;
-            srcX = (this.img.width - this.img.height) / 2;
-        }
-        let ctx: CanvasRenderingContext2D = this.canvas.getContext("2d") as CanvasRenderingContext2D;
-        ctx.drawImage(this.img, srcX, srcY, constraint, constraint, 0, 0, this.canvas.width, this.canvas.height);
-        let raw: ImageData = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
-
-        let image: Image = new Image(this.canvas.width, this.canvas.height);
-        for (let i: number = 0; i < raw.data.length; i += 4) {
-            let row: number = Math.floor(i / 4 / raw.width);
-            let col: number = i / 4 % raw.width;
-            let red: number = raw.data[i] / 255;
-            let green: number = raw.data[i + 1] / 255;
-            let blue: number = raw.data[i + 2] / 255;
-            image.pixels[row][col] = new Color(red, green, blue);
-        }
-
-        if (this.onload !== undefined) {
-            this.onload(image);
-        }
-    }
-
-}
+import { ImageLoader } from "./support/ImageLoader";
+import { Image } from "./support/Image";
+import { Color } from "./support/Color";
 
 function toCanvas(canvas: HTMLCanvasElement, image: Image): void {
     let ctx: CanvasRenderingContext2D = canvas.getContext("2d")!;
@@ -126,6 +17,62 @@ function toCanvas(canvas: HTMLCanvasElement, image: Image): void {
     console.log("done");
 }
 
+interface PixelTransform {
+    (color: Color, row: number, col: number, image: Image): Color;
+}
+
+function imageMap(image: Image, transform: PixelTransform): Image {
+    let clone: Image = image.copy();
+    for (let row: number = 0; row < image.height; row++) {
+        for (let col: number = 0; col < image.width; col++) {
+            clone.pixels[row][col] = transform(image.pixels[row][col].copy(), row, col, image);
+        }
+    }
+    return clone;
+}
+
+function bw(color: Color, row: number, col: number, image: Image): Color {
+    let avg: number = (color.red + color.green + color.blue) / 3;
+    color.red = avg;
+    color.blue = avg;
+    color.green = avg;
+    return color;
+}
+
+function blur(color: Color, row: number, col: number, image: Image): Color {
+
+    let radius: number = 4;
+    let count: number = 0;
+    let red: number = 0;
+    let green: number = 0;
+    let blue: number = 0;
+
+    for (let i: number = row - radius; i <= row + radius && i < image.height; i++) {
+
+        if (i < 0) {
+            i = 0;
+        }
+
+        for (let h: number = col - radius; h <= col + radius && h < image.width; h++)  {
+            if (h < 0) {
+                h = 0;
+            }
+
+            red += image.pixels[i][h].red;
+            green += image.pixels[i][h].green;
+            blue += image.pixels[i][h].blue;
+            count++;
+        }
+    }
+
+    color.red = red / count;
+    color.green = green / count;
+    color.blue = blue / count;
+
+    return color;
+
+}
+
 function main(): void {
 
     let imageSelect: HTMLInputElement = document.getElementById("imageSelect") as HTMLInputElement;
@@ -133,7 +80,9 @@ function main(): void {
     let viewport: HTMLCanvasElement = document.getElementById("viewport") as HTMLCanvasElement;
     viewport.width = 500;
     viewport.height = 500;
-    loader.onload = (image: Image) => toCanvas(viewport, image);
+    loader.onload = (image: Image) => {
+        toCanvas(viewport, imageMap(imageMap(image, blur), bw));
+    };
 
 }
 

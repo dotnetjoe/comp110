@@ -8,14 +8,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
   </head>
   <body>
     
     <div class="container">
-        <h1>Compstagram</h1>
-        <p>Select an Image File...</p>
-        <input id="imageSelect" type="file">
+        <h1>
+          COMPSTAGRAM 
+            <label class="btn btn-dark btn-lg">
+            Change Image <input id="imageSelect" type="file" style="display: none">
+          </label>
+        </h1>
         <canvas id="viewport"></canvas>
+        <div class="filters">
+          <div class="filter">
+            <h2 class="title"><span class="amount">0%</span> Blur</h2>
+            <svg class="amount">
+              <rect x="10" y="14" fill="white" stroke-linecap="round" stroke-linejoin="round"></rect>
+              <circle cx="10" cy="15" r="10" fill="white"></circle>
+            </svg>
+            <button class="btn btn-sm btn-dark">X</button>
+          </div>
+        </div>
+        <div class="actions">
+          <div class="add-filter">
+            <div class="form-row">
+              <div class="col">
+                  <select class="form-control">
+                      <option>Border</option>
+                      <option>Saturation</option>
+                    </select>
+              </div>
+              <div class="col">
+                  <button class="btn btn-dark">Add Filter</button>
+              </div>
+            </div>
+          </div>
+          <div class="save">
+            <button class="btn btn-success">Save</button>
+          </div>
+        </div>
     </div>
 
     <!-- Project's TypeScript (Note, you can link to different typescript files from different pages.) -->
