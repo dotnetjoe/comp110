@@ -218,7 +218,7 @@ let copyAssets = exports.copyAssets = function(state) {
                     let dir = ".." + targets[index].replace(cwd, "");
                     return mkdir(dir);
                 } else {
-                    if (targets[index].indexOf(".html") > 0 && targets[index].indexOf(state.publicDir) >= 0) {
+                    if (targets[index].lastIndexOf(".html") === (targets[index].length - 5) && targets[index].indexOf(state.publicDir) >= 0) {
                         return null;
                     } else {
                         return cp(source, targets[index]);
