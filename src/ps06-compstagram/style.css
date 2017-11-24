@@ -50,9 +50,10 @@ canvas {
     font-weight: normal;
     color: #666;
     display: inline-block;
+    margin-left: 8px;
 }
 
-.filter svg.amount {
+.filter .slider {
     vertical-align: middle;
     display: inline-block;
     width: 60%;
@@ -61,15 +62,17 @@ canvas {
     padding: 0;
 }
 
-.filter svg.amount rect {
+.filter .slider .guide {
     stroke-width: 3;
     stroke: #222;
     width: calc(100% - 20px);
     height: 2px;
 }
 
-.filter svg.amount circle {
+.filter .slider .handle {
     cursor: pointer;
+    fill: white;
+    background: white;
 }
 
 .filter .btn {

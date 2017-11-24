@@ -1,6 +1,16 @@
 import { ImageLoader } from "./support/ImageLoader";
 import { Image } from "./support/Image";
 import { Color } from "./support/Color";
+import { Slider } from "./support/components/Slider";
+import SVGElement from "introcs/graphics/SVGElement";
+import { Observer } from "./support/components/Observers";
+import { Filter } from "./support/Filter";
+import { FilterSelect } from "./support/components/FilterSelect";
+import { FilterControl } from "./support/components/FilterControl";
+import { BlurFilter, BorderFilter } from "./Filters";
+import { View } from "./support/View";
+import { Model } from "./support/Model";
+import { Controller } from "./support/Controller";
 
 function toCanvas(canvas: HTMLCanvasElement, image: Image): void {
     let ctx: CanvasRenderingContext2D = canvas.getContext("2d")!;
@@ -75,14 +85,29 @@ function blur(color: Color, row: number, col: number, image: Image): Color {
 
 function main(): void {
 
-    let imageSelect: HTMLInputElement = document.getElementById("imageSelect") as HTMLInputElement;
-    let loader: ImageLoader = new ImageLoader(imageSelect, 500, 500);
-    let viewport: HTMLCanvasElement = document.getElementById("viewport") as HTMLCanvasElement;
-    viewport.width = 500;
-    viewport.height = 500;
-    loader.onload = (image: Image) => {
-        toCanvas(viewport, imageMap(imageMap(image, blur), bw));
-    };
+    // let imageSelect: HTMLInputElement = document.getElementById("imageSelect") as HTMLInputElement;
+    // let loader: ImageLoader = new ImageLoader(imageSelect, 500, 500);
+    // let viewport: HTMLCanvasElement = document.getElementById("viewport") as HTMLCanvasElement;
+    // viewport.width = 500;
+    // viewport.height = 500;
+    // loader.onload = (image: Image) => {
+    //     toCanvas(viewport, imageMap(imageMap(image, blur), bw));
+    // };
+
+    // let filters: HTMLElement = document.getElementById("filters")!;
+
+    // let select: HTMLSelectElement = document.getElementById("filterSelect") as HTMLSelectElement;
+    // let addButton: HTMLButtonElement = document.getElementById("filterAddButton") as HTMLButtonElement;
+    // let filterSelect: FilterSelect = new FilterSelect([BorderFilter, BlurFilter], select, addButton);
+    // filterSelect.addObserver( (filter: Filter) => {
+    //     let filterControl: FilterControl = new FilterControl(filter);
+    //     filters.appendChild(filterControl.element);
+    // });
+
+    let model: Model = new Model();
+    model.filterClasses = [BlurFilter, BorderFilter];
+    let view: View = new View(model);
+    let controller: Controller = new Controller(model, view);
 
 }
 

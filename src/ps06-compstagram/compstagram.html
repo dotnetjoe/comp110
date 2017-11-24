@@ -20,27 +20,15 @@
           </label>
         </h1>
         <canvas id="viewport"></canvas>
-        <div class="filters">
-          <div class="filter">
-            <h2 class="title"><span class="amount">0%</span> Blur</h2>
-            <svg class="amount">
-              <rect x="10" y="14" fill="white" stroke-linecap="round" stroke-linejoin="round"></rect>
-              <circle cx="10" cy="15" r="10" fill="white"></circle>
-            </svg>
-            <button class="btn btn-sm btn-dark">X</button>
-          </div>
-        </div>
+        <div id="filters" class="filters"></div>
         <div class="actions">
           <div class="add-filter">
             <div class="form-row">
               <div class="col">
-                  <select class="form-control">
-                      <option>Border</option>
-                      <option>Saturation</option>
-                    </select>
+                  <select id="filterSelect" class="form-control"></select>
               </div>
               <div class="col">
-                  <button class="btn btn-dark">Add Filter</button>
+                  <button id="filterAddButton" class="btn btn-dark">Add Filter</button>
               </div>
             </div>
           </div>
