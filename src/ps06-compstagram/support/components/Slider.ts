@@ -38,15 +38,16 @@ export class Slider implements Observable<number> {
     }
 
     private initEventHandlers(): void {
-        this.handle.onmousedown = this.mousedown.bind(this);
+        this.handle.parentElement!.onmousedown = this.mousedown.bind(this);
         this.handle.parentElement!.onmousemove = this.mousemove.bind(this);
         this.handle.parentElement!.onmouseup = this.mouseup.bind(this);
         this.handle.parentElement!.onmouseleave = this.mouseup.bind(this);
         this.handle.parentElement!.onclick = this.click.bind(this);
     }
 
-    private mousedown(): void {
+    private mousedown(event: MouseEvent): void {
         this.isDragging = true;
+        this.mousemove(event);
     }
 
     private mousemove(event: MouseEvent): void {

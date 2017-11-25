@@ -5,7 +5,15 @@ body {
     text-align: center;
 }
 
+#defaultImage {
+    width: 1;
+    height: 1;
+    visibility: hidden;
+    position: absolute;
+}
+
 h1 {
+    font-size: 32px;
     letter-spacing: -2px;
     font-style: italic;
 }
@@ -16,6 +24,10 @@ h1 label {
     margin-left: 16px;
 }
 
+.container {
+    max-width: 530px;
+}
+
 canvas {
     background: #111;
     border: 1px solid #333;
@@ -24,7 +36,7 @@ canvas {
 
 .filters {
     margin: -4px auto 0 auto;
-    width: 500px;
+    max-width: 500px;
 }
 
 .filter {
@@ -51,6 +63,12 @@ canvas {
     color: #666;
     display: inline-block;
     margin-left: 8px;
+}
+
+@media (max-width: 500px) {
+    .filter .title .amount {
+        display: none;
+    }
 }
 
 .filter .slider {
@@ -82,23 +100,17 @@ canvas {
 
 .actions {
     margin: 0 auto;
-    padding: 16px 0;
-    width: 500px;
+    padding: 15px 0;
 }
 
 .add-filter {
-    width: 80%;
-    margin: 0;
     float: left;
 }
 
 .add-filter button {
-    float: left;
+    margin-left: 8px;
 }
 
-.save {
-    margin: 0;
-    width: 20%;
-    float: right;
-    text-align: right;
+.save a {
+    margin-left: 32px;
 }

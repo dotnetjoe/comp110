@@ -3,6 +3,7 @@ import { Filter, FilterClass } from "./Filter";
 
 export class Model {
 
+    image: Image;
     filterClasses: FilterClass[] = [];
     filters: Filter[] = [];
 
@@ -11,7 +12,7 @@ export class Model {
             function(memo: Image, filter: Filter): Image {
                 return filter.process(memo);
             }, 
-            input.copy()
+            input
         );
     }
 

@@ -6,12 +6,12 @@ export class Filter {
     amount: number;
 
     constructor() {
-        this.name = "Filter";
+        this.name = "";
         this.amount = 0.0;
     }
 
     process(input: Image): Image {
-        return new Image(0, 0);
+        return input;
     }
 
 }

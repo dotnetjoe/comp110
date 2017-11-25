@@ -1,6 +1,12 @@
 import { Image } from "./Image";
 import { Color } from "./Color";
 
+declare function loadImage(
+    file: File,
+    callback: (img: HTMLImageElement) => void,
+    options: object
+): void;
+
 export interface ImageEventHandler {
     (image: Image): void;
 }
