@@ -1,5 +1,6 @@
-import { Image } from "./Image";
-import { Filter, FilterClass } from "./Filter";
+import { Image } from "../Image";
+import { Filter } from "../Filter";
+import { FilterClass } from "./FilterClass";
 
 export class Model {
 

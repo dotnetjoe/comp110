@@ -1,8 +1,8 @@
 import { Model } from "./Model";
 import { View } from "./View";
-import { Filter } from "./Filter";
+import { Filter } from "../Filter";
 import { ImageLoader } from "./ImageLoader";
-import { Image } from "./Image";
+import { Image } from "../Image";
 
 export class Controller {
 

@@ -1,5 +1,5 @@
-import { Image } from "./Image";
-import { Color } from "./Color";
+import { Image } from "../Image";
+import { Color } from "../Color";
 
 declare function loadImage(
     file: File,

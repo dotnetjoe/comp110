@@ -1,4 +1,4 @@
-import { Image } from "../Image";
+import { Image } from "../../Image";
 
 export class ImageCanvas {
 
@@ -6,10 +6,8 @@ export class ImageCanvas {
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
-
         this.canvas.width = window.innerWidth - 32 < 500 ? window.innerWidth - 32 : 500;
         this.canvas.height = this.canvas.width;
-        console.log(this.canvas.width);
     }
 
     update(image: Image): void {

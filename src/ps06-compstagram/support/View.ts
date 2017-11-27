@@ -1,6 +1,6 @@
 import { FilterSelect } from "./components/FilterSelect";
 import { Model } from "./Model";
-import { Filter } from "./Filter";
+import { Filter } from "../Filter";
 import { FilterControl } from "./components/FilterControl";
 import { Observer } from "./components/Observers";
 import { ImageCanvas } from "./components/ImageCanvas";

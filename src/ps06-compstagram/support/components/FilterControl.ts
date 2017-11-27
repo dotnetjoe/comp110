@@ -1,5 +1,5 @@
 import { Slider } from "./Slider";
-import { Filter } from "../Filter";
+import { Filter } from "../../Filter";
 import { Observer, Observable } from "./Observers";
 
 export class FilterControl implements Observable<number> {

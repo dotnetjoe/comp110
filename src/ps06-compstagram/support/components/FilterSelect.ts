@@ -1,4 +1,4 @@
-import { Filter } from "../Filter";
+import { Filter } from "../../Filter";
 import { Observer, Observable } from "./Observers";
 
 type FilterClass = typeof Filter;
@@ -26,6 +26,11 @@ export class FilterSelect implements Observable<Filter> {
     }
 
     private click(event: MouseEvent): void {
+        if (this.select.value === "") {
+            // Nothing is selected.
+            return;
+        }
+        
         let filter: Filter = new this.filters[parseInt(this.select.value, 10)]();
         this.observers.forEach((o: Observer<Filter>) => {
             o(filter);
