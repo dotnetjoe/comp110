@@ -139,8 +139,8 @@ export class ContrastFilter extends Filter {
     
     constructor() {
         super();
-        this.amount = 0.5;
         this.name = "Contrast";
+        this.amount = 0.5;
     }
 
     process(input: Image): Image {
@@ -155,6 +155,7 @@ export class SaturationFilter extends Filter {
     constructor() {
         super();
         this.name = "Saturation";
+        this.amount = 0.5;
     }
 
     process(input: Image): Image {
