@@ -204,14 +204,27 @@ let copyAssets = exports.copyAssets = function(state) {
     // We want to copy all non-TS and non-HTML files to both src and public
     return new Promise((resolve, reject) => {
         glob(path.join(state.projectDir, "/*"))
-        .then((files) => files.filter(file => file.match(/.html$|.ts$/) === null))
+        .then((files) => files.filter(file => file.match(/.ts$/) === null))
         .then((files) => {
             let prefix = path.join(state.projectDir, "/");
             let bases = files.map((file) => path.join(file).replace(prefix, ""));
             let sources = files.concat(files);
             let targets = bases.map((file) => path.join(state.bundleDir, "src", state.project, file))
                           .concat(bases.map((file) => path.join(state.bundleDir, "public", file)));
-            return Promise.all(sources.map((source, index) => cp(source, targets[index])));
+            return Promise.all(sources.map((source, index) => {
+                let stat = fs.lstatSync(source);
+                if (stat.isDirectory()) {
+                    let cwd = path.resolve(__dirname, "..");
+                    let dir = ".." + targets[index].replace(cwd, "");
+                    return mkdir(dir);
+                } else {
+                    if (targets[index].lastIndexOf(".html") === (targets[index].length - 5) && targets[index].indexOf(state.publicDir) >= 0) {
+                        return null;
+                    } else {
+                        return cp(source, targets[index]);
+                    }
+                }
+            }));
         })
         .then(() => resolve(state))
         ;

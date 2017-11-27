@@ -1,7 +1,7 @@
 let { bundle, publish } = require("./server/buildPipelineHTML");
 
-let project = "ps05-emoji";
-let app = "emoji.html";
+let project = "ps06-compstagram";
+let app = "compstagram.html";
 let token = "";
 
 publish(bundle(project, app), token)
