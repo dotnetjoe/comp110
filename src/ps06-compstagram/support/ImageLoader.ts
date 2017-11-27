@@ -37,7 +37,17 @@ export class ImageLoader {
             return;
         }
         let file: File = files[0];
-        this.reader.readAsDataURL(file);
+        loadImage(
+            file,
+            (img: HTMLImageElement): void => {
+                this.img = img;
+                this.loadImage();
+            },
+            {
+                maxWidth: 600,
+                orientation: true
+            }
+        );
     }
 
     createImage(): void {
