@@ -17,7 +17,11 @@ export function link(data: string, rest: Node | null): Node {
  */
 export function length(node: Node): number {
     // TODO: Fix this implementation
-    return 1;
+    if (node.next === null) {
+        return 1;
+    } else {
+        return 1 + length(node.next);
+    }
 }
 
 /**
@@ -28,7 +32,10 @@ export function lengthLoop(node: Node): number {
     let count: number = 1;
     let current: Node = node;
     // TODO: Fix this implementation
-
+    while (current.next !== null) {
+        count++;
+        current = current.next;
+    }
     return count;
 }
 
@@ -40,7 +47,11 @@ export function lengthLoop(node: Node): number {
  * Many Nodes:  C -> B -> A -> null
  */
 export function toString(node: Node): string {
-    return "null";
+    if (node.next === null) {
+        return node.data + " -> null";
+    } else {
+        return node.data + " -> " + toString(node.next);
+    }
 }
 
 /**
@@ -48,7 +59,13 @@ export function toString(node: Node): string {
  * of the ith linked Node. If no such node exists, returns null.
  */
 export function get(node: Node, i: number): string | null {
-    return null;
+    if (i === 0) {
+        return node.data;
+    } else if (node.next === null) {
+        return null;
+    } else {
+        return get(node.next, i - 1);
+    }
 }
 
 // === Challenge Functions ===
@@ -60,7 +77,11 @@ export function get(node: Node, i: number): string | null {
  */
 export function copy(node: Node): Node {
     // TODO
-    return node;
+    if (node.next === null) {
+        return node;
+    } else {
+        return link(node.data, copy(node.next));
+    }
 }
 
 /**
@@ -69,6 +90,13 @@ export function copy(node: Node): Node {
  */
 export function append(data: string, node: Node): void {
     // TODO
+    if (node.next === null) {
+        let tail: Node = new Node();
+        tail.data = data;
+        node.next = tail;
+    } else {
+        append(data, node.next);
+    }
 }
 
 /**
@@ -77,5 +105,12 @@ export function append(data: string, node: Node): void {
  */
 export function reverse(node: Node): Node {
     // TODO
-    return node;
+    if (node.next === null) {
+        return node;
+    } else {
+        let reversed: Node = reverse(node.next);
+        node.next.next = node;
+        node.next = null;
+        return reversed;
+    }
 }

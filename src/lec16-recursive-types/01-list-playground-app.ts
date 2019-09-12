@@ -15,8 +15,16 @@ import {
 function main(): void {
 
     let list: Node = link("Jane", link("John", link("Sally", null)));
-    print("Length: " + length(list));
+    list = link("Kit", list);
 
+    print("Length: " + length(list));
+    print("Length loop: " + lengthLoop(list));
+
+    print(toString(list));
+
+    print(get(list, 0));
+    print(get(list, 2));
+    print(get(list, 40));
 }
 
 main();

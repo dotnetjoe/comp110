@@ -7,11 +7,12 @@ interface Predicate {
 
 function main(): void {
     // 1. Declaring a Predicate variable
-
+    let test: Predicate;
     // 2. Assigning a reference to a function
-
+    test = isPositive;
     // 3. Calling the function variable, print the result
-    
+    print(test(10));
+    print(test(-5));
 }
 
 function isPositive(n: number): boolean {

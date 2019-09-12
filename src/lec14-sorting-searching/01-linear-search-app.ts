@@ -47,7 +47,9 @@ function linearSearch(haystack: string[], needle: string, compare: Comparator<st
         comparisons++; // Count this as a comparison
 
         // TODO: If comparison result is A_SAME_AS_B, then return true.
-        
+        if (comparison === A_SAME_AS_B) {
+            return true;
+        }
     }
 
     return false;

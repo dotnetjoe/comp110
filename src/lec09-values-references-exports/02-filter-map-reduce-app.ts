@@ -3,7 +3,10 @@ import "introcs";
 import {
     Game,
     mapPoints,
-    reduceSum
+    mapAssists,
+    reduceSum,
+    // reduceAvg,
+    filterByOutcome
 } from "./library";
 
 function main(): void {
@@ -12,6 +15,15 @@ function main(): void {
 
 function process(games: Game[]): void {
     print("Games: " + games.length);
+
+    let filtered: Game[] = filterByOutcome(games, "W");
+    print("Filtered: " + filtered.length);
+
+    let mapped: number[] = mapPoints(filtered);
+    print(mapped);
+
+    let reduced: number = reduceSum(mapped);
+    print(reduced);
 }
 
 main();

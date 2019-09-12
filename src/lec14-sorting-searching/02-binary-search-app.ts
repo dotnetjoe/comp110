@@ -52,10 +52,17 @@ function binarySearch(haystack: string[], needle: string, compare: Comparator<st
         comparisons++; // Count this call to comparator
 
         // TODO: Implement Correct Logic
-        low = high + 1; // Remove this line which causes the loop to exit.
+        if (comparison <= A_BEFORE_B) {
+            // lower
+            high = middle - 1;
+        } else if (comparison >= A_AFTER_B) {
+            // higher
+            low = middle + 1;
+        } else {
+            return true;
+        }
         
     }
-
     // Needle was not found!
     return false;
 }

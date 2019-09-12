@@ -19,7 +19,9 @@ function whileLoopExample(): void {
 function forLoopExample(): void {
     print("For Loop Examples");
     // TODO: Write a for loop equivalent to the while loop above
-
+    for ( let i: number = 0; i < 10; i++) {
+        print(i);
+    }
 }
 
 main();

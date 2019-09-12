@@ -2,7 +2,7 @@ import "introcs";
 
 function main(): void {
     print("Enter main()");
-    f(3);
+    f(-20);
     print("Leave main()");
 }
 
@@ -12,6 +12,7 @@ function f(n: number): void {
         print("Base case!");
     } else {
         print("Recur!");
+        f(n + 1);
     }
     print("Leave f(" + n + ")");
 }

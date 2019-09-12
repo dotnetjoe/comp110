@@ -18,6 +18,11 @@ export class Axes {
         let group: Group = new Group();
 
         // TODO: Create Axes Rectangles
+        let xAxis: Rectangle = new Rectangle(this.width, .01, -this.width / 2);
+        group.add(xAxis);
+    
+        let yAxis: Rectangle = new Rectangle(.01, this.height, 0, -this.height / 2);
+        group.add(yAxis);
 
         return group;
     }

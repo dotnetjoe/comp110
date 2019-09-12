@@ -19,6 +19,14 @@ function squareStats(length: number): void {
 function main(): void {
     print("main called!");
     // TODO #2: call squareStats with any value you'd like
+    promptNumber ("What is the length?" , squareStats);
 }
 
 // TODO #1: call the main function
+// main();
+
+let i: number = 10;
+while (i > 0) {
+    print(i);
+    i = i - 4;
+}

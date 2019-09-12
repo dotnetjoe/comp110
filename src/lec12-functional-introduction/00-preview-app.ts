@@ -7,7 +7,7 @@ function main(): void {
     //           in total?
     let words: string[] = ["the", "quick", "brown", "fox", "named", "jinx"];
 
-    print(words);
+    print(words.filter(endsWithX).map(toLength).reduce(sum));
 
 }
 

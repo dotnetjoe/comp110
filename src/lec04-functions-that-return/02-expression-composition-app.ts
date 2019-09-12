@@ -26,12 +26,12 @@ function max2(a: number, b: number): number {
 function max3(a: number, b: number, c: number): number {
 
     // TODO: Implement max3 WITHOUT using any if-then statements
-    
+
     // Strategy:
     // 1. Declare and initialize a variable that holds the max of a, b
+    let maxAB: number = max2(a, b);
     // 2. Return the max of the variable from step 1 and c
-    
-    return 0;
+    return max2(maxAB, c);
 }
 
 main();

@@ -23,11 +23,11 @@ function main(): void {
     print(words);
 
     // TODO: declare a test predicate we can use with the words array
-    
+    let test: Predicate<string> = isLength3;
     // TODO: print words filtered by test predicate
-    
+    print(words.filter(test));
     // TODO: print words that end with x
-
+    print(words.filter(endsWithX));
 }
 
 main();

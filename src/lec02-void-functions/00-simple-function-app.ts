@@ -8,3 +8,10 @@ function squareArea(length: number): void {
 
 print("Let's call squareArea...");
 // TODO: Call the squareArea function!
+squareArea(3);
+squareArea(4);
+
+function greeter(name: string): void {
+    print("Hello " + name);
+}
+greeter("Adam");

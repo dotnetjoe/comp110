@@ -36,7 +36,19 @@ export class GameOfLife {
      */
     isLive(row: number, col: number): boolean {
         // TODO
-        return false;
+        if (row === -1) {
+            row = this.rows - 1;
+        } else if (row === this.rows) {
+            row = 0;
+        }
+
+        if (col === -1) {
+            col = this.cols - 1;
+        } else if (col === this.cols) {
+            col = 0;
+        }
+        // TODO Handle the cases above
+        return this.cells[row][col] === 1;
     }
 
     /**
@@ -45,7 +57,18 @@ export class GameOfLife {
      */
     countLiveNeighbors(row: number, col: number): number {
         // TODO
-        return 0;
+        let count: number = 0;
+        for (let i:number = 0; i <= row; i++) {
+            for (let h: number = col - 1; h <= col + 1; h++) {
+                if (!(i === row && h === col)) {
+                    // do nothing
+                    if (this.isLive (i, h)) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
     }
 
     /**
@@ -68,10 +91,36 @@ export class GameOfLife {
         let cells: number[][] = this.cells;
         
         // TODO
-
+        for (let row:number = 0; row < this.rows; row++) {
+            for (let col:number = 0; col < this.cols; col++) {
+                next[row][col] = this.rules(row, col);
+            }
+        }
+    
         this.cells = next;
     }
 
+    rules (row: number, col: number): number {
+        let live: boolean = this.isLive(row, col);
+        let neighbors: number = this.countLiveNeighbors(row, col);
+        if (live) {
+            if (neighbors < 2) {
+                // underpopulation
+                return 0;
+            } else if ( neighbors > 3) {
+                // overpopulation rule
+                return 0;
+            } else {
+                return 1;
+            }
+        } else {
+            if (neighbors === 3) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
     /**
      * This method is called by the controller when the game is stopped
      * and the user clicks on a particular cell.

@@ -1,9 +1,17 @@
 import { Color } from "./Color";
 import { Image } from "./Image";
 import { Filter } from "./Filter";
+import { filter } from "../lec16-recursive-types/reduce-map-filter";
 
 // TODO: Insert Honor Pledge Here
-
+/**    
+ * Author: Adam Alston    
+ * ONYEN: aalston9
+ * UNC Honor Pledge: I certify that no unauthorized assistance has been received   
+ * or given in the completion of this work. I certify that I understand and 
+ * could now rewrite on my own, without assistance from course staff,  
+ * the problem set code I am submitting.
+ */
 /**
  * The InvertFilter's process method is provided to you as an example for
  * some ideas on how to implement an image processing algorithm given an input
@@ -98,9 +106,18 @@ export class BorderFilter extends Filter {
 
     process(input: Image): Image {
         // TODO 2.1
-        return input;
-    }
+        let thickness: number = Math.floor((input.width / 2) * this.amount);
+        let output: Image = input.copy();
 
+        for (let row: number = 0; row < output.height; row++) {
+            for (let col: number = 0; col < output.width; col++) {
+                if (col < thickness || col >= output.width - thickness || row < thickness || row >= output.height - thickness) {
+                    output.pixels[row][col] = this.color;
+                }
+            }
+        }
+        return output;
+    }
 }
 
 export class BrightnessFilter extends Filter {
@@ -113,7 +130,19 @@ export class BrightnessFilter extends Filter {
 
     process(input: Image): Image {
         // TODO 2.2
-        return input;
+        let output: Image = input.copy();
+        let brightness: number = (this.amount - .5) * 2;
+
+        for (let row: number = 0; row < output.height; row++) {
+            for (let col: number = 0; col < output.width; col++) {
+                let pixel: Color = output.pixels[row][col];
+                
+                pixel.red = pixel.red + (brightness * pixel.red);
+                pixel.green = pixel.green + (brightness * pixel.green);
+                pixel.blue = pixel.blue + (brightness * pixel.blue);  
+            }
+        }
+        return output;
     }
 
 }
@@ -130,7 +159,23 @@ export class ColorizeFilter extends Filter {
 
     process(input: Image): Image {
         // TODO 2.3
-        return input;
+        let output: Image = input.copy();
+        let deltaComponent: Color = new Color(0, 0, 0);
+
+        for (let row: number = 0; row < output.height; row++) {
+            for (let col: number = 0; col < output.width; col++) {
+                let pixel: Color = output.pixels[row][col];
+
+                deltaComponent.red = (this.color.red - pixel.red) * this.amount;
+                deltaComponent.green = (this.color.green - pixel.green) * this.amount;
+                deltaComponent.blue = (this.color.blue - pixel.blue) * this.amount;
+                
+                pixel.red = pixel.red + deltaComponent.red;
+                pixel.green = pixel.green + deltaComponent.green;
+                pixel.blue = pixel.blue + deltaComponent.blue;
+            }
+        }
+        return output;
     }
 
 }
@@ -145,7 +190,24 @@ export class ContrastFilter extends Filter {
 
     process(input: Image): Image {
         // TODO 2.4
-        return input;
+        let output: Image = input.copy();
+        let contrast: number = (.5 - this.amount) * 2;
+        let deltaComponent: Color = new Color(0, 0, 0);
+
+        for (let row: number = 0; row < output.height; row++) {
+            for (let col: number = 0; col < output.width; col++) {
+                let pixel: Color = output.pixels[row][col];
+
+                deltaComponent.red = (.5 - pixel.red) * contrast;
+                deltaComponent.green = (.5 - pixel.green) * contrast;
+                deltaComponent.blue = (.5 - pixel.blue) * contrast;
+
+                pixel.red = pixel.red + deltaComponent.red;
+                pixel.green = pixel.green + deltaComponent.green;
+                pixel.blue = pixel.blue + deltaComponent.blue;
+            }
+        }
+        return output;
     }
 
 }
@@ -160,7 +222,28 @@ export class SaturationFilter extends Filter {
 
     process(input: Image): Image {
         // TODO 2.5
-        return input;
+        let output: Image = input.copy();
+        let contrast: number = (.5 - this.amount) * 2;
+        let deltaComponent: Color = new Color(0, 0, 0);
+
+
+        for (let row: number = 0; row < output.height; row++) {
+            for (let col: number = 0; col < output.width; col++) {
+                let pixel: Color = output.pixels[row][col];
+
+                let average: number = (pixel.red + pixel.green + pixel.blue) / 3;
+                let newColor: Color = new Color(average, average, average);
+
+                deltaComponent.red = (newColor.red - pixel.red) * contrast;
+                deltaComponent.green = (newColor.green - pixel.green) * contrast;
+                deltaComponent.blue = (newColor.blue - pixel.blue) * contrast;
+
+                pixel.red = pixel.red + deltaComponent.red;
+                pixel.green = pixel.green + deltaComponent.green;
+                pixel.blue = pixel.blue + deltaComponent.blue;
+            }
+        }
+        return output;
     }
 
 }

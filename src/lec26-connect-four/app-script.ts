@@ -53,13 +53,25 @@ function play(row: number, col: number): void {
     let player: number = turn % 2;
 
     // TODO: Find an empty row in the selected column
+    let emptyRow: number = findEmptyRow(col);
+    if (emptyRow === -1) {
+        alert("No room in column!");
+        return;
+    }
 
     // Assign a position to the current player
-    board[row][col] = player;
+    board[emptyRow][col] = player;
 
     // TODO: Check to see if player won
-
+    if (isWin(player)) {
+        alert("You won!");
+        reset();
     // TODO: Check for draw game
+    } else if (isDraw()) {
+        alert ("Draw!");
+        reset;
+    }
+
  
     renderBoard();
     turn++;
@@ -72,8 +84,12 @@ function play(row: number, col: number): void {
 function findEmptyRow(col: number): number {
 
     // TODO
-    return 0;
-
+    for (let row: number = board.length - 1; row >= 0; row--) {
+        if (board[row][col] === EMPTY) {
+            return row;
+        }
+    }
+    return -1;
 }
 
 /**
@@ -82,7 +98,14 @@ function findEmptyRow(col: number): number {
  * streak of 4 connected positions controlled by the same player.
  */
 function isWin(player: number): boolean {
-    // TODO: Implement 
+    // TODO: Implement
+    for (let row: number = 0; row < board.length; row++) {
+        for (let col: number = 0; col < board[0].length; col++) {
+            if (isConnect4(player, row, col)) {
+                return true;
+            }
+        }
+    }
     return false;
 }
 
@@ -103,8 +126,14 @@ function isWin(player: number): boolean {
 function isConnect4(player: number, row: number, col: number): boolean {
 
     // TODO: Implement logic to check for a win in all directions starting at row, col
-    return board[row][col] === player && row === ROWS - 1 && col === 1 && player === 0;
-
+    for (let rowDir: number = -1; rowDir <= 1; rowDir ++) {
+        for (let colDir: number = -1; colDir <= 1; colDir ++) {
+            if (recurConnect4(player, row, col, rowDir, colDir, 0)) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 /**
@@ -123,8 +152,18 @@ function recurConnect4(
         ): boolean {
 
     // TODO: Implement logic to check for a win in all directions starting at row, col
-    return board[row][col] === player && row === ROWS - 1 && col === 1 && player === 1;
-
+    if (streak === 4) {
+        return true;
+    } else if (row < 0 || col < 0 || row >= board.length || col >= board[0].length) {
+        return false;
+    } else if (board[row][col] !== player) {
+        return false;
+    } else if (rowDir === 0 && colDir === 0) {
+        return false;
+    } else {
+        return recurConnect4(player, row + rowDir, col + colDir, rowDir, colDir, streak + 1);
+    }
+    // return board[row][col] === player && row === ROWS - 1 && col === 1 && player === 1;
 }
 
 /**
@@ -134,8 +173,12 @@ function recurConnect4(
 function isDraw(): boolean {
 
     // TODO
-    return false;
-
+    for (let col: number = 0; col < board[0].length; col++) {
+        if (findEmptyRow(col) !== -1) {
+        return false;
+        }
+    }
+    return true;
 }
 
 /**

@@ -18,7 +18,11 @@ function sum(a: number[]): number {
     // 2. Inside the loop:
     //    2.1. Increase the result variable by a[i]
     //    2.2. Increment i by 1
-
+    
+    while (i < a.length) {
+        result = result + a[1];
+        i = i + 1;
+    }
     return result;
 }
 

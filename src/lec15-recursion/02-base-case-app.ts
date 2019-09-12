@@ -9,7 +9,11 @@ function main(): void {
 function f(n: number): void {
     print("Enter f(" + n + ")");
     // TODO: Fix the infinite recursion with a base case
-    f(n - 1);
+    if (n <= 0) {
+        print("Base case!");
+    } else {
+        f(n - 1);
+    }
     print("Leave f(" + n + ")");
 }
 

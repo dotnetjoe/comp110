@@ -23,7 +23,7 @@ function main(): void {
     }
 
     // TODO: Call f and _try_ printing a
-
+    f();
 }
 
 main();

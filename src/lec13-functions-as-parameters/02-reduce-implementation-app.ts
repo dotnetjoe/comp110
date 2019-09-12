@@ -14,6 +14,9 @@ function main(): void {
 
 function reduce(a: string[], reducer: Reducer<string, number>, memo: number): number {
     // TODO #1 - Implement reduce using a for loop
+    for (let i: number = 0; i < a.length; i++) {
+        memo = reducer(memo, a[i]);
+    }
     return memo;
 }
 

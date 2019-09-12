@@ -4,6 +4,7 @@ import { first, rest } from "./helpers";
 import { Reducer } from "../lec13-functions-as-parameters/filter-map-reduce";
 
 function main(): void {
+    print(reduce([], sum, 0));
     print(reduce([2, 3, 4], sum, 0));
 }
 
@@ -12,7 +13,7 @@ function reduce<T, U>(a: T[], f: Reducer<T, U>, memo: U): U {
         return memo;
     } else {
         // TODO!
-        return memo;
+        return reduce(rest(a), f, f(memo, first(a)));
     }
 }
 

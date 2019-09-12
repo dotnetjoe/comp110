@@ -9,7 +9,12 @@ function main(): void {
 
 function sum(a: number[]): number {
     // TODO: Implement sum Recursively
-    return 0;
+    print(a);
+    if (a.length === 0) {
+        return 0;
+    } else {
+        return first(a) + sum(rest(a)); 
+    }
 }
 
 main();

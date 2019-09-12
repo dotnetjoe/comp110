@@ -7,7 +7,7 @@ let y: number = 10;
 let z: number = 10;
 
 let unc: string = "UNC";
-let duke: string = "Duke";
+let duke: string = "Dook";
 
 // Use the following inequality operators to form comparisons
 // that evaluate to, and therefore print, true.
@@ -20,16 +20,16 @@ print(x < y);
 // print statements.
 
 // Less than or equal to: <
-print();
+print(x <= y);
 
 // Greater than: >
-print();
+print(unc > duke);
 
 // Greater than or equal to: >=
-print();
+print(z >= x);
 
 // Equal to: ===
-print();
+print(y === z);
 
 // Not equal to: !==
-print();
+print(unc !== duke);

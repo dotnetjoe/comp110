@@ -1,10 +1,10 @@
 import "introcs";
-import { SVG, Group, Color } from "introcs/graphics";
+import { SVG, Group, Color, Rectangle } from "introcs/graphics";
 
 import { Grid } from "./Grid";
 
 // TODO: Import additional classes
-import { FaceShape } from "./Emoji";
+import { FaceShape, Eye, Mouth, Emoji } from "./Emoji";
 
 function main(): void {
     let scene: Group = initScene();
@@ -14,9 +14,8 @@ function main(): void {
     scene.add(grid.shapes());
 
     // TODO: Change the following code when you work on other pieces (Eye, Mouth, Emoji)
-    let piece: FaceShape = new FaceShape(new Color(0.2941, 0.6118, 0.8275));
+    let piece: Emoji = new Emoji();
     scene.add(piece.shapes());
-
 }
 
 /**

@@ -25,13 +25,17 @@ export class Game {
  * return a new array of Games containing only the wins (W)s.
  */
 // TODO: Export this function.
-function filterByOutcome(games: Game[], outcome: string): Game[] {
+export function filterByOutcome(games: Game[], outcome: string): Game[] {
     let matches: Game[] = [];
     let i: number = 0;
     while (i < games.length) {
+        let game: Game = games[i];
+        if (game.outcome[0] === outcome) {
         // TODO: Only copy a game to matches IF the first character
         // of a game's outcome is equal to the outcome parameter
-        matches[matches.length] = games[i];
+            matches[matches.length] = games[i];
+        }
+        
         i++;
     }
     return matches;
@@ -57,6 +61,11 @@ export function mapPoints(games: Game[]): number[] {
  */
 export function mapAssists(games: Game[]): number[] {
     let assists: number[] = [];
+    let i: number = 0;
+    while (i < games.length) {
+        assists[i] = games[i].assists;
+        i++;
+    }
     // TODO: Implement Map Assists
     return assists;
 }
@@ -73,3 +82,7 @@ export function reduceSum(a: number[]): number {
     }
     return result;
 }
+
+// export function reduceAvg(a: number[]): number {
+//     return reduceSum(a) / a.length;
+// }

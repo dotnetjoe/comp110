@@ -10,11 +10,11 @@ function main(): void {
 }
 
 function max2(a: number, b: number): number {
-    return 0;
-}
-
-function max3(a: number, b: number, c: number): number {
-    return 0;
+    if (a > b) {
+        return a;
+    } else {
+        return b;
+    }
 }
 
 main();

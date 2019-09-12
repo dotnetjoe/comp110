@@ -17,11 +17,11 @@ function main(): void {
 
     // TODO: As you work begin work on each filter, comment it out.
     model.filterClasses = [
-        // SaturationFilter,
-        // ContrastFilter,
-        // ColorizeFilter,
-        // BrightnessFilter,
-        // BorderFilter,
+        SaturationFilter,
+        ContrastFilter,
+        ColorizeFilter,
+        BrightnessFilter,
+        BorderFilter,
         InvertFilter
     ];
 

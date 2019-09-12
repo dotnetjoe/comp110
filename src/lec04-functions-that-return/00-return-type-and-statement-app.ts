@@ -10,10 +10,14 @@ function main(): void {
     let sum: number = 0;
     
     // TODO #2: Compute the sum of the area of the three rooms
-    
+    sum = area(bathroom) + area(kitchen) + area(bedroom);
+
     print("The area is " + sum);
 }
 
 // TODO #1: Define a function named area
+function area(length: number): number {
+    return length * length;
+}
 
 main();

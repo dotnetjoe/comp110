@@ -13,7 +13,9 @@ function main(): void {
     print(numberTest(-1));
 
     // TODO: Declare a Predicate of type string
-    
+    let test: Predicate<string>;
+    test = isLength3;
+    print(test("comp"));
 }
 
 function isPositive(n: number): boolean {

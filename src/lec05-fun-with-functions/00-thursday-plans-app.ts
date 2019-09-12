@@ -10,13 +10,19 @@ function ageGate(input: number): void {
     print("Have Dinner");
 
     // TODO: Improve this app...
+    if (canGoToBars(input)){
+        print("Drink water!");
+    } else {
+        print("Walk back to CMike");
+    }
 
     print("... and then work on COMP110 assignments.");
 }
 
 function canGoToBars(age: number): boolean {
     // TODO: Fix this logic
-    return false;
+    print("Checking ID");
+    return age >= 21;
 }
 
 main();

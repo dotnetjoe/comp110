@@ -14,16 +14,30 @@ function main(): void {
 
 function process(games: Game[]): void {
     // TODO
-    print("Total points: ");
-    print("Total games fouled out: ");
+    print("Total points: " + totalPoints(games));
+    print("Total games fouled out: " + gamesFouledOut(games));
 }
 
 function gamesFouledOut(games: Game[]): number {
-    return 0;
+    let count: number = 0;
+    let i:number = 0;
+    while (i < games.length) {
+        if (games[i].fouls === 5) {
+            count++;
+        }
+        i++;
+    }
+    return count;
 }
 
 function totalPoints(games: Game[]): number {
-    return 0;
+    let sum: number = 0;
+    let i: number = 0;
+    while (i < games.length) {
+        sum = sum + games[i].points;
+        i++;
+    }
+    return sum;
 }
 
 main();

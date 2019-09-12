@@ -13,6 +13,13 @@ function handleGuess(guess: number): void {
     // ELSE
     //   call the function named incorrect
     
+    if (guess === 1) {
+        correct();
+        print ("You're right!");
+    } else {
+        incorrect();
+        print ("You're wrong. Did you think you were right?")
+    }
     incorrect(); // You can delete this line (or reuse it).
     
     main(); // Start the game over again

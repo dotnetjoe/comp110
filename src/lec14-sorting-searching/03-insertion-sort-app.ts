@@ -20,7 +20,11 @@ function sort(a: number[], compare: Comparator<number>): number[] {
     for (let i: number = 0; i < a.length; i++) {
         let hat: number = i;
         // TODO: Implement the logic to move a[hat] backward to its correct position
-        
+        while (hat > 0 && compare(a[hat], a[hat - 1]) <= A_BEFORE_B) {
+            moveBackward(a, hat);
+            hat--;
+        }
+        print(a);
     }
     return a;
 }

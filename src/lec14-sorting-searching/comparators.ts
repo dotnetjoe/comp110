@@ -13,7 +13,13 @@ export function byTempLow(a: WeatherRow, b: WeatherRow): number {
 
 export function byTempHigh(a: WeatherRow, b: WeatherRow): number {
     // TODO!
-    return 0;
+    if (a.tempHigh > b.tempHigh) {
+        return A_BEFORE_B;
+    } else if (a.tempHigh < b.tempHigh) {
+        return A_AFTER_B;
+    } else {
+        return A_SAME_AS_B;
+    }
 }
 
 export function alphabetical(a: string, b: string): number {
